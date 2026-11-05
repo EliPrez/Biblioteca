@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión - Red de Bibliotecas Comunitarias</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Librerías de WebSockets (SockJS y STOMP) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <h1>📚 Red de Bibliotecas Comunitarias</h1>
+        <p>Sistema de Gestión Académica y Tiempo Real</p>
+    </div>
+    <div id="conexion-badge" class="badge conectado">Conectado en Tiempo Real (WebSocket)</div>
+</header>
+
+<main class="container">
+
+    <!-- Panel de Control / Estado General -->
+    <section class="card">
+        <h2>Panel de Estado en Tiempo Real</h2>
+        <div class="grid-sockets">
+
+            <!-- Caso 1: Disponibilidad de Libros -->
+            <div class="socket-box">
+                <h3>1. Disponibilidad de Libros</h3>
+                <input type="text" id="input-libro" placeholder="Título del libro...">
+                <button onclick="enviarLibroDisponible()">Notificar Disponible</button>
+                <div id="log-libros" class="log-box">Esperando eventos de libros...</div>
+            </div>
+
+            <!-- Caso 2: Ocupación de Cubículos -->
+            <div class="socket-box">
+                <h3>2. Estado de Cubículos</h3>
+                <select id="select-cubiculo">
+                    <option value="Cubículo 1">Cubículo 1 (Libre)</option>
+                    <option value="Cubículo 2">Cubículo 2 (Ocupado)</option>
+                </select>
+                <button onclick="cambiarCubiculo()">Actualizar Estado</button>
+                <div id="log-cubiculos" class="log-box">Monitoreando cubículos...</div>
+            </div>
+
+            <!-- Caso 3: Alertas de Multas -->
+            <div class="socket-box">
+                <h3>3. Alertas de Multas por Mora</h3>
+                <input type="text" id="input-socio" placeholder="Nombre del socio...">
+                <button onclick="emitirMulta()">Generar Multa</button>
+                <div id="log-multas" class="log-box">Sin alertas recientes...</div>
+            </div>
+
+            <!-- Caso 4: Chat con Bibliotecario -->
+            <div class="socket-box chat-box">
+                <h3>4. Chat Socio - Bibliotecario</h3>
+                <div id="log-chat" class="log-box chat-log"></div>
+                <input type="text" id="input-chat" placeholder="Escribe tu consulta...">
+                <button onclick="enviarMensajeChat()">Enviar Mensaje</button>
+            </div>
+
+            <!-- Caso 5: Ranking de Préstamos -->
+            <div class="socket-box full-width">
+                <h3>5. Dashboard de Préstamos Populares en Vivo</h3>
+                <button onclick="incrementarRanking()">Simular Préstamo de Libro</button>
+                <div id="log-ranking" class="ranking-display">Total Préstamos en Vivo: <span id="contador-ranking">0</span></div>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>&copy; 2026 - Desarrollado por Eliada Pérez | Red de Bibliotecas Comunitarias</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
